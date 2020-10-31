@@ -33,10 +33,13 @@ var nowCmd = &cobra.Command{
 }
 
 func currentTime() {
-	cTimeUTC := time.Now().UTC().Format(time.RFC3339)
-	cTime := time.Now().Format(time.RFC3339)
-	fmt.Println(cTimeUTC)
-	fmt.Println(cTime)
+	now := time.Now()
+	cTimeUTC := now.UTC().Format(time.RFC3339)
+	cTime := now.Format(time.RFC3339)
+	zone, _ := now.Local().Zone()
+	fmt.Println("UTC : ", cTimeUTC)
+	fmt.Println(zone, " : ", cTime)
+	fmt.Println("Unix(seconds) : ", now.Unix())
 }
 
 func init() {
