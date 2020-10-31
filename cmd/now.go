@@ -28,11 +28,15 @@ var nowCmd = &cobra.Command{
 	Short: "Displays the current time in UTC",
 	Long: `Displays the current time in UTC in iso8601 format`,
 	Run: func(cmd *cobra.Command, args []string) {
-		cTimeUTC := time.Now().UTC().Format(time.RFC3339)
-		cTime := time.Now().Format(time.RFC3339)
-		fmt.Println(cTimeUTC)
-		fmt.Println(cTime)
+		currentTime()
 	},
+}
+
+func currentTime() {
+	cTimeUTC := time.Now().UTC().Format(time.RFC3339)
+	cTime := time.Now().Format(time.RFC3339)
+	fmt.Println(cTimeUTC)
+	fmt.Println(cTime)
 }
 
 func init() {
