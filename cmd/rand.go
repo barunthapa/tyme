@@ -17,41 +17,41 @@ package cmd
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 
 	"github.com/spf13/cobra"
 )
 
-// nowCmd represents the now command
-var nowCmd = &cobra.Command{
-	Use:   "now",
-	Short: "Displays the current time in UTC",
-	Long: `Displays the current time in UTC in iso8601 format`,
+// randCmd represents the rand command
+var randCmd = &cobra.Command{
+	Use:   "rand",
+	Short: "Generates a random time from future",
+	Long: `Generates a random time from future that has range from now till 10 days.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		currentTime()
+		now := time.Now()
+		window := 10 * 24 * time.Hour
+		s1 := rand.NewSource(time.Now().UnixNano())
+    	r1 := rand.New(s1)
+    	randomSeconds := r1.Intn(int(window.Seconds()))
+    	randomTime := now.Add(time.Duration(randomSeconds) * time.Second)
+    	zone, _ := now.Local().Zone()
+		fmt.Println("UTC :", randomTime.UTC().Format(time.RFC3339))
+		fmt.Println(zone, ":", randomTime.Format(time.RFC3339))
+    	fmt.Println("Unix(seconds) :", randomTime.Unix())
 	},
 }
 
-func currentTime() {
-	now := time.Now()
-	cTimeUTC := now.UTC().Format(time.RFC3339)
-	cTime := now.Format(time.RFC3339)
-	zone, _ := now.Local().Zone()
-	fmt.Println("UTC :", cTimeUTC)
-	fmt.Println(zone, ":", cTime)
-	fmt.Println("Unix(seconds) :", now.Unix())
-}
-
 func init() {
-	rootCmd.AddCommand(nowCmd)
+	rootCmd.AddCommand(randCmd)
 
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
-	// nowCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// randCmd.PersistentFlags().String("foo", "", "A help for foo")
 
 	// Cobra supports local flags which will only run when this command
 	// is called directly, e.g.:
-	// nowCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// randCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
