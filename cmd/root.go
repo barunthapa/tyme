@@ -31,10 +31,10 @@ var rootCmd = &cobra.Command{
 	Use:   "tyme",
 	Short: "A CLI application to work with Time",
 	Long: `Tyme is a dev tool to work with time related stuffs.
-			Hope it helps.`,
+Supposed to be developer friendly.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) { currentTime() },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
